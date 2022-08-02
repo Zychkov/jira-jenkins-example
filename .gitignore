@@ -1,0 +1,22 @@
+######################
+# Intellij
+######################
+/shelf/
+target/
+work/
+build/
+out/
+.idea/
+.gradle/
+reports/
+*.iws
+*.ipr
+*.ids
+*.orig
+*.log
+*.iml
+*.html
+######################
+# Allure
+######################
+.allure/
