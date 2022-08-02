@@ -44,7 +44,8 @@ public class IssueTest {
         ));
 //        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
-        final String url = "http://localhost:4444/wd/hub";
+        //get from ifconfig for en0
+        final String url = "http://172.16.101.91:4444/wd/hub";
         WebDriver driver = new RemoteWebDriver(URI.create(url).toURL(), capabilities);
         driver.manage().window().setSize(new Dimension(1920,1024));
         WebDriverRunner.setWebDriver(driver);
