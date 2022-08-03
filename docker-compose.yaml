@@ -24,3 +24,41 @@ services:
     ports:
       - 8000:8080
     network_mode: bridge
+
+  jira:
+#    image: dchevell/jira-software-arm64
+    image: atlassian/jira-software
+#    platform: linux/amd64
+    container_name: jira
+    depends_on:
+      - db
+    volumes:
+      - "${PWD}/work/jira:/var/atlassian/application-data/jira"
+    ports:
+      - "9999:8080"
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jira@db/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+      - 'CATALINA_OPTS= -Xms256m -Xmx1g'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+      - 'JIRA_DB_HOST=db'
+      - 'JIRA_DB_PORT=5432'
+    network_mode: bridge
+
+  db:
+    image: postgres:10
+    container_name: postgresql
+    hostname: postgresql
+    ports:
+      - "5432:5432"
+    volumes:
+      - "${PWD}/work/postgresql:/var/lib/postgresql/data"
+    environment:
+      - 'POSTGRES_USER=jira'
+      - 'POSTGRES_PASSWORD=jellyfish'
+      - 'POSTGRES_DB=jiradb'
+      - 'POSTGRES_ENCODING=UTF8'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
